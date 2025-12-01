@@ -72,7 +72,7 @@ Test the simulation:
 make px4_sitl jmavsim
 ```
 
-### If it works, you're done.  
+### If it works, you're done ✅  
 If not, continue with the next steps below.
 
 ---
