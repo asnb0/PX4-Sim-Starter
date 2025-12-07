@@ -100,6 +100,15 @@ cd ~/PX4-Autopilot
 make px4_sitl jmavsim
 ```
 
+---
+
+## To update the submodule:
+
+```bash
+cd ~/PX4-Autopilot
+git submodule update --init --recursive
+```
+
 And that is it, enjoy the flight! 🛫
 
 ---
