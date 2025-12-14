@@ -14,8 +14,9 @@ If you're using a Mac, it's perfectly fine to run Ubuntu in a virtual machine. W
 ## 📦 What’s Inside This Repository
 
 ### 1. PX4 Installation Guide
-- Install PX4 from source
-- 
+- [Install PX4 from source](./PX4/)
+- [Install and set up Gazebo](./Gazebo/)
+- [Install and set up ROS2 Humble](./ROS2Humbel/)
 ---
 
 ### 2. Running PX4 Simulations
