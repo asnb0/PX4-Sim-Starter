@@ -108,6 +108,7 @@ async def main():
     async for state in t_drone.telemetry.landed_state():
         if state == state.ON_GROUND:
             print("Drone landed!")
+            break
             
     battery_task.cancel() # After the drone is returned and landed, we stop the background task (battery_checker)!
 asyncio.run(main())
