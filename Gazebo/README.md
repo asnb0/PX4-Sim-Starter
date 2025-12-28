@@ -10,11 +10,9 @@ This section covers running PX4 simulations using the modern Gazebo (GZ) simulat
 1. [Standard Launch](#1-standard-launch)  
 2. [Performance: Headless Mode](#2-performance-headless-mode)  
 3. [Custom Spawn Points (Environment Variables)](#3-custom-spawn-points-environment-variables)  
-4. [Advanced Workflows (Separation of Concerns)](#4-advanced-workflows-separation-of-concerns)  
-5. [Multi-Vehicle Simulation](#5-multi-vehicle-simulation)  
-6. [Custom Worlds & Models](#6-custom-worlds--models)  
-7. [Debugging & Physics Settings](#7-debugging--physics-settings)  
-8. [Need Help?](#need-help)
+4. [Multi-Vehicle Simulation](#5-multi-vehicle-simulation)  
+5. [Custom Worlds & Models](#6-custom-worlds--models)  
+6. [Debugging & Physics Settings](#7-debugging--physics-settings)  
 
 ---
 
@@ -43,23 +41,6 @@ make px4_sitl gz_x500_mono_cam_balylands
 
 ---
 
-## 2. Performance: Headless Mode
-
-If you are running simulation on a server, a CI/CD pipeline, or a Virtual Machine (like UTM on Mac) where 3D rendering causes lag, use **Headless Mode**. This runs the physics and PX4 backend without launching the graphical interface.
-
-**Command:**
-
-```bash
-HEADLESS=1 make px4_sitl gz_x500
-```
-
-**Why use this?**
-
-- Significantly reduces RAM and GPU usage.  
-- Increases the Real Time Factor (RTF), making the sim run smoother.  
-- Ideal for automated testing where you only care about data logs, not visuals.
-
----
 
 ## 3. Custom Spawn Points (Environment Variables)
 
@@ -80,32 +61,8 @@ PX4_HOME_LAT=24.7136 PX4_HOME_LON=46.6753 PX4_HOME_ALT=600 make px4_sitl gz_x500
 > **Note:** There is alot of other Environment Variables, see [Usage/Configuration Options](https://docs.px4.io/main/en/sim_gazebo_gz/#usage-configuration-options)
 ---
 
-## 4. Advanced Workflows (Separation of Concerns)
 
-Development is faster if you don't have to restart the heavy 3D world every time you tweak the PX4 code. You can run Gazebo and PX4 in separate terminals.
-
-### Step 1: Run Just the World (Terminal 1)
-
-Start Gazebo with your desired world. This keeps the environment loaded.
-
-```bash
-gz sim -r default.sdf
-# OR for a specific custom world
-gz sim -r my_custom_world.sdf
-```
-
-### Step 2: Run PX4 Separately (Terminal 2)
-
-Compile and run PX4, telling it to connect to the existing Gazebo instance.
-
-```bash
-PX4_GZ_STANDALONE=1 make px4_sitl gz_x500
-```
-
-> 💡 **Note:** If your drone crashes, you only need to kill and restart the command in Terminal 2. The world in Terminal 1 stays open!
----
-
-## 5. Multi-Vehicle Simulation
+## 4. Multi-Vehicle Simulation
 
 Running multiple drones is essential for swarm testing. PX4 provides a script to handle instance creation (assigning unique ports and MAVLink IDs to each drone).
 
@@ -116,11 +73,12 @@ ARGS ./build/px4_sitl_default/bin/px4 [-i <instance>]
 **For the first drone:** lunch the drone with the world:
 
 ```bash
-PX4_SYS_AUTOSTART=4001 PX4_GZ_WORLD=baylands PX4_SIM_MODEL=gz_x500 ./build/px4_sitl_default/bin/px4 -i 1
+PX4_SYS_AUTOSTART=4001 PX4_SIM_MODEL=gz_x500 PX4_SIM_MAVSDK_UDP_PORT=14540 PX4_SIM_QGC_UDP_PORT=14550 ./build/px4_sitl_default/bin/px4 -i 0
 ```
 **For the other drones:** launch them with `PX4_GZ_STANDALONE=1`:
-
-
+```bash
+PX4_GZ_STANDALONE=1 PX4_SYS_AUTOSTART=4001 PX4_GZ_MODEL_POSE="0,2,0" PX4_SIM_MAVSDK_UDP_PORT=14542 PX4_SIM_QGC_UDP_PORT=14552 ./build/px4_sitl_default/bin/px4 -i 2
+```
 **Key Considerations:**
 
 - **Instance IDs:** Drone 1 will use MAVLink ID 1 (Port 14550), Drone 2 uses ID 2 (Port 14551), etc.  
@@ -128,7 +86,7 @@ PX4_SYS_AUTOSTART=4001 PX4_GZ_WORLD=baylands PX4_SIM_MODEL=gz_x500 ./build/px4_s
   
 ---
 
-## 6. Custom Worlds & Models
+## 5. Custom Worlds & Models
 
 To use your own assets, you need to tell Gazebo where to look for them.
 
@@ -152,7 +110,7 @@ make px4_sitl gz_x500_desert
 
 ---
 
-## 7. Debugging & Physics Settings
+## 6. Debugging & Physics Settings
 
 ### GZ Debugging Tools
 
