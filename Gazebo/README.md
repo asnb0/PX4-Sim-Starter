@@ -3,6 +3,8 @@
 
 This section covers running PX4 simulations using the modern Gazebo (GZ) simulator (formerly Ignition). We cover standard execution, performance optimization, and advanced workflow setups.
 
+For more information visit: https://docs.px4.io/main/en/sim_gazebo_gz/
+
 ---
 
 ## 📋 Table of Contents
