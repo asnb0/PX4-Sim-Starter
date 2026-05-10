@@ -1,0 +1,106 @@
+<?xml version='1.0' encoding='ASCII'?>
+<sdf version='1.9'>
+  <world name='tugbot_warehouse'>
+    <physics type='ode'>
+      <max_step_size>0.004</max_step_size>
+      <real_time_factor>1.0</real_time_factor>
+      <real_time_update_rate>250</real_time_update_rate>
+    </physics>
+    <gravity>0 0 -9.8</gravity>
+    <magnetic_field>6e-06 2.3e-05 -4.2e-05</magnetic_field>
+    <atmosphere type="adiabatic"/>
+    
+    <scene>
+      <ambient>1 1 1 1</ambient>
+      <background>0.3 0.7 0.9 1</background>
+      <shadows>0</shadows>
+      <grid>false</grid>
+    </scene>
+
+    <light type="directional" name="sun">
+      <cast_shadows>0</cast_shadows>
+      <pose>-5 -3 10 0 0 0</pose>
+      <diffuse>1 1 1 1</diffuse>
+      <specular>1 1 1 1</specular>
+      <direction>0 0 -1</direction>
+    </light>
+
+    <model name='ground_plane'>
+      <static>true</static>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry>
+            <plane>
+              <normal>0.0 0.0 1</normal>
+              <size>1 1</size>
+            </plane>
+          </geometry>
+        </collision>
+      </link>
+      <pose>0 0 0 0 0 0</pose>
+    </model>
+
+    <!-- Base Warehouse -->
+    <include>
+      <uri>https://fuel.ignitionrobotics.org/1.0/MovAi/models/Warehouse</uri>
+      <name>warehouse</name>
+      <pose>0 0 -0.09 0 0 0</pose>
+    </include>
+
+    <!-- Charging Station -->
+    <include>
+      <uri>https://fuel.ignitionrobotics.org/1.0/MovAi/models/Tugbot-charging-station</uri>
+      <name>charging_station</name>
+      <pose>14.7 -10.6 -0.04 0 0 0</pose>
+    </include>
+
+    <!-- ROW 1: Big Shelves (Original row - right side) -->
+    
+    <include>
+      <uri>https://fuel.ignitionrobotics.org/1.0/MovAi/models/shelf_big</uri>
+      <name>shelf_1</name>
+      <pose>6.19777 -12.9647 0 0 -0 0</pose>
+    </include>
+    
+    <include>
+      <uri>https://fuel.ignitionrobotics.org/1.0/MovAi/models/shelf_big</uri>
+      <name>shelf_2</name>
+      <pose>0.594376 -12.9647 0 0 -0 0</pose>
+    </include>
+    
+    
+    <include>
+      <uri>https://fuel.ignitionrobotics.org/1.0/MovAi/models/shelf_big</uri>
+      <name>shelf_3</name>
+      <pose>-5.36284 -12.9647 0 0 -0 0</pose>
+    </include>
+    
+
+    <!-- ROW 2: Big Shelves (New row - left side, parallel to row 1) -->
+    <include>
+      <uri>https://fuel.ignitionrobotics.org/1.0/MovAi/models/shelf_big</uri>
+      <name>shelf_4</name>
+      <pose>-5.36284 12.9647 0 0 -0 0</pose>
+    </include>
+  
+    <include>
+      <uri>https://fuel.ignitionrobotics.org/1.0/MovAi/models/shelf_big</uri>
+      <name>shelf_5</name>
+      <pose>0.594376 12.9647 0 0 -0 0</pose>
+    </include>
+    <include>
+      <uri>https://fuel.ignitionrobotics.org/1.0/MovAi/models/shelf_big</uri>
+      <name>shelf_6</name>
+      <pose>6.19777 12.9647 0 0 -0 0</pose>
+    </include>
+    
+    
+    <spherical_coordinates>
+      <surface_model>EARTH_WGS84</surface_model>
+      <world_frame_orientation>ENU</world_frame_orientation>
+      <latitude_deg>47.397971057728974</latitude_deg>
+      <longitude_deg>8.546163739800146</longitude_deg>
+      <elevation>0</elevation>
+    </spherical_coordinates>
+  </world>
+</sdf>
