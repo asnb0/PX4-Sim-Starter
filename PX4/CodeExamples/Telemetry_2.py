@@ -23,11 +23,11 @@ async def run():
             print("Drone connected!")
             break
 
-    asyncio.create_task(position(drone))
-    asyncio.create_task(battery(drone))
-    asyncio.create_task(in_air(drone))
+    pos_task = asyncio.create_task(position(drone))
+    bat_task = asyncio.create_task(battery(drone))
+    air_task = asyncio.create_task(in_air(drone))
 
-    await asyncio.sleep(20)
+    await asyncio.gather(pos_task, bat_task, air_task)
 
 asyncio.run(run())
 
